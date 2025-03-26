@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+        .chat-container {
+            width: 350px;
+            height: 300px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction:column;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        #chatbox {
+            flex:1;
+            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            margin: 5px;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .bot {
+            background: lightgreen;
+            align-self: flex-start;
+            text-align: left;
+        }
+        .input-area {
+            display: flex;
+            border-top: 2px solid black;
+            padding: 10px;
+            background: white;
+        }
+        input {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid black;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            margin-left: 10px;
+            padding: 8px 15px;
+            border: none;
+            background: black;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: darkgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div id="chatbox"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var inputField = document.getElementById("userInput");
+            var input = inputField.value.trim();
+            if (input === "") {
+                return;
+            }
+            var chatbox = document.getElementById("chatbox");
+
+            // Display user message
+            var userMessage = "<div class='message'>" + input + "</div>";
+            chatbox.innerHTML += userMessage;
+
+            // Clear input field
+            inputField.value = "";
+
+            // Bot replies with a delay
+            setTimeout(function() {
+                var botResponse = getBotResponse(input);
+                var botMessage = "<div class='bot'>" + botResponse + "</div>";
+                chatbox.innerHTML += botMessage;
+                 chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll
+            }, 1000);
+        }
+
+        function getBotResponse(input) {
+            var responses = {
+                "hello": "Hey there! 👋",
+                "how are you": "I'm just a bot, but I'm doing great! 😃",
+                "your name": "I'm ChatBot! 🤖",
+                "bye": "Goodbye! Have a nice day! 👋",
+                "ur fav movie" :"pushpa",
+                "thinnava":"thinnanu"
+            };
+            var lowerInput = input.toLowerCase();
+            if (responses[lowerInput]) {
+                return responses[lowerInput];
+            } else {
+                return "I don't understand that. 🤔";
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "N") {
+                sendMessage();
+            }
+        }
+    </script>
+
+</body>
+</html>
